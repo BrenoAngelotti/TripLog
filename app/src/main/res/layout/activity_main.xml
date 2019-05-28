@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.MainActivity"
+    android:background="?attr/appBackgroundColor">
+
+    <android.support.design.bottomappbar.BottomAppBar
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </android.support.design.bottomappbar.BottomAppBar>
+
+    <!--<android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </android.support.design.widget.AppBarLayout>-->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvTrips"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/app_bar"
+        android:layout_alignParentBottom="true"
+        tools:listItem="@layout/item_trip"
+        android:layoutAnimation="@anim/layout_anim_from_bottom" />
+
+    <LinearLayout
+        android:id="@+id/ll_empty_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/app_bar"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:scaleType="fitCenter"
+            style="@style/EmptyListImage"
+            app:srcCompat="@drawable/places"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            style="@style/EmptyListLabel"
+            android:text="@string/txt_no_trips"/>
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_add_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/app_bar"
+        android:clickable="true"
+        android:focusable="true"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/map_marker_plus"
+        android:onClick="addNewTrip"/>
+
+</android.support.design.widget.CoordinatorLayout>

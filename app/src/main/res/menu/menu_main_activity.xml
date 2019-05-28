@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/action_search"
+        android:title="@string/action_search"
+        android:icon="@drawable/magnify"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_swap_theme"
+        android:title="@string/action_theme"
+        android:icon="@drawable/theme_light_dark"
+        android:checkable="true"
+        android:checked="false"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_about"
+        android:title="@string/action_about"
+        app:showAsAction="never"/>
+
+</menu>

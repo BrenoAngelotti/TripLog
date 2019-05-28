@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="int_add_trip">1001</integer>
+    <integer name="int_edit_trip">1002</integer>
+</resources>

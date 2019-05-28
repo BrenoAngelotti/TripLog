@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_slogan">Gerencie sua diversão!</string>
+
+    <string name="action_search">Buscar</string>
+    <string name="action_save">Salvar</string>
+    <string name="action_theme">Modo escuro</string>
+    <string name="action_about">Sobre</string>
+    <string name="action_discard">Descartar</string>
+    <string name="action_edit">Editar</string>
+    <string name="action_remove">Remover</string>
+    <string name="action_linkedin">me veja no linkedin</string>
+
+    <string name="txt_type">Tipop</string>
+    <string name="txt_color">Cor</string>
+    <string name="txt_test">Teste</string>
+    <string name="txt_trip_image_description">Imagem do passeio</string>
+    <string name="txt_lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non tincidunt felis. Vivamus quis tincidunt eros. Ut auctor aliquam diam. Morbi ante lacus, molestie ut orci sit amet, dapibus luctus arcu. Sed quis dignissim lacus, eget imperdiet odio. Maecenas dapibus eros euismod pretium congue. Sed mollis ante eu libero posuere, id pretium tellus consectetur. Nulla a condimentum nulla. Nunc semper eu nisi eget tempor. Suspendisse dapibus odio ligula, ut porttitor lorem molestie nec. Fusce fringilla commodo justo nec scelerisque. Nunc suscipit purus eu purus ultricies finibus eget eu odio. Aliquam tincidunt pulvinar scelerisque.\nCras vel nunc placerat nulla varius venenatis. Quisque imperdiet sem eget odio ullamcorper, ac condimentum ex malesuada. Etiam ultricies euismod pharetra. Vivamus gravida sodales elit, ac venenatis arcu viverra quis. Donec vitae accumsan eros. Mauris mattis mattis lorem a scelerisque. Suspendisse eu massa tincidunt, porttitor lectus suscipit, tincidunt lacus. Mauris non venenatis ipsum. In laoreet, turpis vel malesuada accumsan, ligula nunc aliquet elit, nec sagittis ipsum lorem in lacus. Mauris ac venenatis purus.\nFusce iaculis mauris a neque fringilla, quis imperdiet nulla viverra. Nunc imperdiet enim sed metus aliquam pellentesque. In dictum vel ex in posuere. Vivamus lorem neque, scelerisque et sapien sed, mollis commodo lacus. Quisque cursus nunc ipsum, eu vestibulum lectus euismod nec. Donec blandit, quam suscipit consectetur ornare, nunc tellus mollis nulla, sed malesuada erat est vel purus. Nam et porta quam. Cras nec posuere erat. Proin lobortis consectetur libero. Suspendisse lacinia faucibus justo quis commodo. Vivamus aliquam est eget varius congue. Suspendisse potenti.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ut elit id metus ultricies lacinia. Proin quis mauris et nisi cursus cursus sed id libero. Phasellus ultricies aliquam feugiat. Quisque vitae lacus velit. Vestibulum sit amet porttitor orci. Nam id posuere dui, non ornare nunc. Nam commodo, massa in scelerisque iaculis, orci ante facilisis quam, ac rutrum nisi elit sed magna. Quisque mi nisl, molestie ut sollicitudin ut, consectetur et lectus. Quisque vel metus nulla.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quam ante, placerat quis iaculis in, consectetur quis neque. Curabitur vel pharetra lectus. Suspendisse sed neque semper sapien commodo faucibus quis placerat leo. Ut turpis augue, vulputate sit amet nunc in, ultrices facilisis arcu. Maecenas porta ante at massa placerat pellentesque. Aenean a tortor eget felis malesuada tincidunt ac non orci.</string>
+    <string name="txt_name">Nome</string>
+    <string name="txt_description">Descrição</string>
+    <string name="txt_date">Data</string>
+    <string name="txt_trip">Passeio</string>
+    <string name="txt_add_trip">Adicionar passeio</string>
+    <string name="txt_about">TripLog é como um diário de viagens, onde você pode gravar todos o lugares que visitou.\n\nEste app foi desenvolvido como parte da matéria de Desenvolvimento Mobile da UTFPR</string>
+    <string name="txt_edit_trip">Editar passeio</string>
+
+    <string name="message_obligatory_field">Campo obrigatório</string>
+    <string name="message_not_implemented">Função ainda deve ser implementada</string>
+    <string name="message_discard_changes">Descartar alterações?</string>
+    <string name="message_error">Erro desconhecido</string>
+
+    <string name="format_date">dd/MM/yyyy</string>
+
+    <string name="txt_no_trips">Nenhum registro de\npasseio ainda!</string>
+
+</resources>

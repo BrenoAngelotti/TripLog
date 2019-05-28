@@ -1,0 +1,67 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="listCardBackgroundColor">?attr/colorPrimary</item>
+        <item name="appBackgroundColor">@color/colorBackground</item>
+
+        <item name="primaryTextColor">@color/colorPrimaryText</item>
+        <item name="secondaryTextColor">@color/colorSecondaryText</item>
+        <item name="hiddenTextColor">@color/colorHiddenText</item>
+
+        <item name="android:windowContentTransitions">true</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:homeAsUpIndicator">@drawable/arrow_left</item>
+
+        <item name="android:windowEnterTransition">@android:transition/slide_left</item>
+        <item name="android:windowExitTransition">@android:transition/slide_right</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/darkColorPrimary</item>
+        <item name="colorPrimaryDark">@color/darkColorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="listCardBackgroundColor">?attr/colorPrimary</item>
+        <item name="appBackgroundColor">@color/darkColorBackground</item>
+
+        <item name="primaryTextColor">@color/darkColorPrimaryText</item>
+        <item name="secondaryTextColor">@color/darkColorSecondaryText</item>
+        <item name="hiddenTextColor">@color/darkColorHiddenText</item>
+
+        <item name="android:windowContentTransitions">true</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:homeAsUpIndicator">@drawable/arrow_left</item>
+
+        <item name="android:windowEnterTransition">@android:transition/slide_left</item>
+        <item name="android:windowExitTransition">@android:transition/slide_right</item>
+    </style>
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">?attr/primaryTextColor</item>
+    </style>
+
+    <style name="Widget.AppTheme.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="hintTextAppearance">@style/TextAppearance.AppTheme.TextInputLayout.HintText</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textColorHint">?attr/hiddenTextColor</item>
+        <item name="android:colorControlNormal">?attr/hiddenTextColor</item>
+    </style>
+
+    <style name="TextAppearance.AppTheme.TextInputLayout.HintText" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textColor">?attr/primaryTextColor</item>
+    </style>
+
+    <style name="EmptyListLabel">
+        <item name="android:layout_marginTop">32dp</item>
+        <item name="android:textColor">?attr/secondaryTextColor</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="EmptyListImage">
+        <item name="android:tint">?attr/colorPrimary</item>
+    </style>
+</resources>

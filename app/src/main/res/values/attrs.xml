@@ -1,0 +1,7 @@
+<resources>
+    <attr name="listCardBackgroundColor" format="reference"/>
+    <attr name="appBackgroundColor" format="reference"/>
+    <attr name="primaryTextColor" format="reference"/>
+    <attr name="secondaryTextColor" format="reference"/>
+    <attr name="hiddenTextColor" format="reference"/>
+</resources>
