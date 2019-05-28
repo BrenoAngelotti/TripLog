@@ -1,4 +1,0 @@
-#Thu Apr 04 19:40:30 BRT 2019
-base.0=D\:\\Faculdade\\Mobile\\TripLog\\app\\build\\intermediates\\dex\\release\\mergeDexRelease\\out
-path.0=classes.dex
-renamed.0=classes.dex
