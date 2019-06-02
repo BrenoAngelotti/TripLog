@@ -1,35 +1,39 @@
 package com.angelotti.triplog.View;
 
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.Toast;
-import com.angelotti.triplog.Model.Trip;
+import com.angelotti.triplog.Model.*;
+import com.angelotti.triplog.Persistence.AppDatabase;
 import com.angelotti.triplog.R;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import android.os.AsyncTask;
 
 public class TripDataActivity extends AppCompatActivity {
     Toolbar toolbar;
-    TextInputEditText tieName;
+    TextInputEditText tieTitle;
     TextInputEditText tieDescription;
     TextInputEditText tieDate;
     DatePickerDialog tripDateDialog;
+    FloatingActionButton fabSave;
 
     static Date tripDate;
 
-    int index;
+    int id;
     boolean editing;
     Trip trip;
+    ArrayList<Type> types;
 
     boolean checkDiscard = true;
 
@@ -41,22 +45,26 @@ public class TripDataActivity extends AppCompatActivity {
 
         tieDescription = findViewById(R.id.tie_description);
         tieDate = findViewById(R.id.tie_date);
-        tieName = findViewById(R.id.tie_name);
+        tieTitle = findViewById(R.id.tie_name);
+        fabSave = findViewById(R.id.fab_save);
 
-        index = getIntent().getIntExtra(getString(R.string.const_index), -1);
-        editing = index >= 0;
+        fabSave.setOnClickListener(saveClickListener);
+        id = getIntent().getIntExtra(getString(R.string.const_id), -1);
+        String title = getIntent().getStringExtra(getString(R.string.const_title));
+        editing = id >= 0;
 
         toolbar = findViewById(R.id.toolbar);
         if(editing){
-            trip = MainActivity.tripList.get(index);
+            loadTrip();
             toolbar.setTitle(R.string.txt_edit_trip);
-            toolbar.setSubtitle(trip.getTitle());
-            setEditingFields();
+            toolbar.setSubtitle(title);
         }
         else{
             trip = new Trip();
             toolbar.setTitle(getString(R.string.txt_add_trip));
         }
+
+        loadTypes();
 
         setSupportActionBar(toolbar);
 
@@ -70,17 +78,34 @@ public class TripDataActivity extends AppCompatActivity {
         tripDateDialog = new DatePickerDialog(this, datePickerListener, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
     }
 
+    private void loadTypes() {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase database = AppDatabase.getDatabase(TripDataActivity.this);
+                types = new ArrayList<>(database.typeDAO().getAll());
+                TripDataActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //carregar spinner
+                    }
+                });
+            }
+        });
+    }
+
+    View.OnClickListener saveClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            save();
+        }
+    };
+
     private void setEditingFields() {
-        tieName.setText(trip.getTitle());
+        tieTitle.setText(trip.getTitle());
         tieDescription.setText(trip.getDescription());
         tripDate = trip.getDate();
         tieDate.setText(new SimpleDateFormat(getString(R.string.format_date)).format(tripDate));
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_trip_data_activity, menu);
-        return true;
     }
 
     @Override
@@ -89,42 +114,73 @@ public class TripDataActivity extends AppCompatActivity {
             case android.R.id.home:
                 this.onBackPressed();
                 return true;
-            case R.id.action_save:
-                if(!saveTrip())
-                    return true;
-                finish();
-                return true;
         }
         return true;
+    }
+
+    void save(){
+        if(!saveTrip())
+            return;
+        finish();
+    }
+
+    void loadTrip(){
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase database = AppDatabase.getDatabase(TripDataActivity.this);
+                trip = database.tripDAO().getById(id);
+                trip.setType(database.typeDAO().getById(trip.getTypeId()));
+                TripDataActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setEditingFields();
+                    }
+                });
+            }
+        });
     }
 
     boolean saveTrip(){
         if(!testFields())
             return false;
-        String name = tieName.getText().toString();
-        String description = tieDescription.getText().toString();
-        if(editing){
-            trip.setTitle(name);
-            trip.setDescription(description);
-            trip.setDate(tripDate);
-        }
-        else{
-            index = MainActivity.tripList.size();
-            MainActivity.tripList.add(new Trip(name, description, tripDate, null));
-        }
-        getIntent().putExtra(getString(R.string.const_index), index);
+        final String title = tieTitle.getText().toString();
+        final String description = tieDescription.getText().toString();
+        final Date date = tripDate;
+        final Type type = types.get(0);
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase database = AppDatabase.getDatabase(TripDataActivity.this);
+
+                if (!editing) {
+                    trip = new Trip(title, description, tripDate, type);
+                    int newId = (int) database.tripDAO().insert(trip);
+                    trip.setId(newId);
+
+                } else {
+                    trip.setId(id);
+                    trip.setTitle(title);
+                    trip.setDescription(description);
+                    trip.setDate(date);
+                    trip.setType(type);
+                    database.tripDAO().update(trip);
+                }
+            }
+        });
         setResult(RESULT_OK, getIntent());
         return true;
     }
 
     boolean testFields(){
-        String name = tieName.getText().toString();
+        String name = tieTitle.getText().toString();
         String description = tieDescription.getText().toString();
         String date = tieDate.getText().toString();
         boolean passing = true;
 
         if(name.isEmpty()){
-            tieName.setError(getString(R.string.message_obligatory_field));
+            tieTitle.setError(getString(R.string.message_obligatory_field));
             passing = false;
         }
         if(description.isEmpty()){
@@ -142,6 +198,9 @@ public class TripDataActivity extends AppCompatActivity {
     private View.OnClickListener onDateClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            View focus = getCurrentFocus();
+            if(focus != null)
+                focus.clearFocus();
             if(editing){
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(tripDate);

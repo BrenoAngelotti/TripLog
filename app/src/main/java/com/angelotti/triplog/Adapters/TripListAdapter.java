@@ -44,28 +44,13 @@ public class TripListAdapter extends RecyclerView.Adapter {
 
         Trip trip = trips.get(i);
 
-        if(false /*trip.getType() != null*/){
-            holder.llTypeName.setVisibility(View.VISIBLE);
-            holder.viewTypeColor.setVisibility(View.VISIBLE);
-            int color = Color.parseColor(trip.getType().getColor());
-            holder.viewTypeColor.setBackgroundColor(color);
-            holder.llTypeName.setBackgroundColor(color);
-            holder.txvTypeName.setText(trip.getType().getName());
-        }
-        else{
-            holder.viewTypeColor.setVisibility(View.GONE);
-            holder.llTypeName.setVisibility(View.GONE);
-        }
-
+        int color = Color.parseColor(trip.getType().getColor());
+        holder.viewTypeColor.setBackgroundColor(color);
+        holder.txvTypeName.setTextColor(color);
+        holder.txvTypeName.setText(trip.getType().getName());
         holder.txvTripTitle.setText(trip.getTitle());
         holder.txvTripDescription.setText(trip.getDescription());
-        if(trips.get(i).getDate() != null){
-            holder.txvTripDate.setVisibility(View.VISIBLE);
-            holder.txvTripDate.setText(new SimpleDateFormat(context.getString(R.string.format_date)).format(trip.getDate()));
-        }
-        else {
-            holder.txvTripDate.setVisibility(View.GONE);
-        }
+        holder.txvTripDate.setText(new SimpleDateFormat(context.getString(R.string.format_date)).format(trip.getDate()));
 
         /*//Image mock
         if(i == 0) {
@@ -94,8 +79,7 @@ public class TripListAdapter extends RecyclerView.Adapter {
         final TextView txvTripTitle;
         final TextView txvTripDescription;
         final TextView txvTripDate;
-        final LinearLayout viewTypeColor;
-        final LinearLayout llTypeName;
+        final View viewTypeColor;
         final TextView txvTypeName;
 
         TripListViewHolder(@NonNull View itemView) {
@@ -105,7 +89,6 @@ public class TripListAdapter extends RecyclerView.Adapter {
             txvTripDescription = itemView.findViewById(R.id.txv_trip_description);
             txvTripDate = itemView.findViewById(R.id.txv_trip_date);
             viewTypeColor = itemView.findViewById(R.id.view_type_color);
-            llTypeName = itemView.findViewById(R.id.ll_type_name);
             txvTypeName = itemView.findViewById(R.id.txv_type_name);
 
             itemView.setOnClickListener(clickListener);

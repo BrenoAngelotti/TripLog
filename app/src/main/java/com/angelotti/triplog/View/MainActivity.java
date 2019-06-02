@@ -1,30 +1,31 @@
 package com.angelotti.triplog.View;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.bottomappbar.BottomAppBar;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.view.ContextMenu;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.angelotti.triplog.Adapters.TripListAdapter;
 import com.angelotti.triplog.Model.Trip;
-import com.angelotti.triplog.Model.Type;
+import com.angelotti.triplog.Persistence.AppDatabase;
 import com.angelotti.triplog.R;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
+    BottomAppBar appBar;
     Toolbar toolbar;
     RecyclerView rvTrips;
     LinearLayout llEmptyList;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        appBar = findViewById(R.id.app_bar);
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
         toolbar.setSubtitle(R.string.app_slogan);
@@ -60,11 +62,6 @@ public class MainActivity extends AppCompatActivity {
         rvTrips.setLayoutManager(layoutManager);
 
         loadTrips();
-
-        adapter = new TripListAdapter(tripList, onItemClickListener, onItemLongClickListener, this);
-        rvTrips.setAdapter(adapter);
-
-        registerForContextMenu(rvTrips);
     }
 
     private View.OnClickListener onItemClickListener = new View.OnClickListener() {
@@ -77,34 +74,63 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(currentActionMode != null)
+            currentActionMode.finish();
+    }
+
     private View.OnLongClickListener onItemLongClickListener = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View view) {
             position = rvTrips.getChildAdapterPosition(view);
-            openContextMenu(view);
+
+            if (currentActionMode != null)
+                return false;
+            startActionMode(actionModeCallback);
+            view.setSelected(true);
             return true;
         }
     };
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        menu.setHeaderTitle(tripList.get(position).getTitle());
-        getMenuInflater().inflate(R.menu.menu_trip_select, menu);
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_edit:
-                editTrip();
-                return true;
-            case R.id.action_remove:
-                removeTrip();
-                return true;
+    private ActionMode currentActionMode;
+    private ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            mode.getMenuInflater().inflate(R.menu.menu_trip_select, menu);
+            currentActionMode = mode;
+            return true;
         }
-        return super.onContextItemSelected(item);
-    }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            fab.hide();
+            toolbar.getMenu().clear();
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.action_edit:
+                    editTrip();
+                    break;
+                case R.id.action_remove:
+                    removeTripVerification();
+                    break;
+            }
+            mode.finish();
+            return true;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            currentActionMode = null;
+            fab.show();
+            toolbar.inflateMenu(R.menu.menu_main_activity);
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -147,16 +173,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadTrips(){
-        if(tripList == null)
-            tripList = new ArrayList<>();
+        tripList = new ArrayList<>();
 
-        checkListSize();
-
-        /*//Mock
-        tripList.add(new Trip("Cornélio Procópio", "Estudando aqui, fazer o que né?", new Date(112, 2, 3), null));
-        tripList.add(new Trip("New York City", "Mano que cidade top, não tem lugar melhor que esse na terra", new Date(110, 8, 15), new Type("City", "#FF00FF")));
-        tripList.add(new Trip("São Paulo", "Véi, só quero voltar a morar lá", new Date(93, 4, 21), new Type("City", "#FF00FF")));
-        */
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+              AppDatabase database = AppDatabase.getDatabase(MainActivity.this);
+              tripList.addAll(database.tripDAO().getAll());
+              for(Trip trip : tripList){
+                  trip.setType(database.typeDAO().getById(trip.getTypeId()));
+              }
+              MainActivity.this.runOnUiThread(new Runnable() {
+                  @Override
+                  public void run() {
+                      checkListSize();
+                  }
+              });
+            }
+        });
     }
 
     public void addNewTrip(View view){
@@ -166,7 +200,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void editTrip(){
         Intent intent = new Intent(getApplicationContext(), TripDataActivity.class);
-        intent.putExtra(getString(R.string.const_index), position);
+        intent.putExtra(getString(R.string.const_id), tripList.get(position).getId());
+        intent.putExtra(getString(R.string.const_title), tripList.get(position).getTitle());
         startActivityForResult(intent, getResources().getInteger(R.integer.int_add_trip));
     }
 
@@ -174,19 +209,40 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if((requestCode == getResources().getInteger(R.integer.int_add_trip) || requestCode == getResources().getInteger(R.integer.int_edit_trip)) && resultCode == RESULT_OK){
-            position = data.getIntExtra(getString(R.string.const_index), -1);
-            if(position >= 0)
-                adapter.notifyItemChanged(position);
-            else
-                Toast.makeText(this, getString(R.string.message_error), Toast.LENGTH_SHORT).show();
-            checkListSize();
+            loadTrips();
         }
     }
 
-    public void removeTrip(){
-        tripList.remove(position);
-        adapter.notifyItemRemoved(position);
-        checkListSize();
+    public void removeTripVerification(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.action_remove)
+                .setMessage(R.string.message_remove_trip)
+                .setPositiveButton(R.string.action_remove, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        removeTrip();
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) { }
+                });
+        builder.create().show();
+    }
+
+    private void removeTrip() {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase database = AppDatabase.getDatabase(MainActivity.this);
+                database.tripDAO().delete(tripList.get(position));
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadTrips();
+                    }
+                });
+            }
+        });
     }
 
     void checkListSize(){
@@ -195,6 +251,8 @@ public class MainActivity extends AppCompatActivity {
             llEmptyList.setVisibility(View.VISIBLE);
         }
         else{
+            adapter = new TripListAdapter(tripList, onItemClickListener, onItemLongClickListener, this);
+            rvTrips.swapAdapter(adapter, false);
             rvTrips.setVisibility(View.VISIBLE);
             llEmptyList.setVisibility(View.GONE);
         }

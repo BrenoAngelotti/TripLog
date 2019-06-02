@@ -7,17 +7,6 @@
     tools:context=".View.MainActivity"
     android:background="?attr/appBackgroundColor">
 
-    <android.support.design.bottomappbar.BottomAppBar
-        android:id="@+id/app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </android.support.design.bottomappbar.BottomAppBar>
-
     <!--<android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar0"
         android:layout_width="match_parent"
@@ -33,9 +22,11 @@
         android:id="@+id/rvTrips"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/app_bar"
+        android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         tools:listItem="@layout/item_trip"
+        android:paddingBottom="72dp"
+        android:clipToPadding="false"
         android:layoutAnimation="@anim/layout_anim_from_bottom" />
 
     <LinearLayout
@@ -61,6 +52,21 @@
             style="@style/EmptyListLabel"
             android:text="@string/txt_no_trips"/>
     </LinearLayout>
+
+
+    <android.support.design.bottomappbar.BottomAppBar
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:fabAlignmentMode="center"
+            app:hideOnScroll="true"
+            app:layout_scrollFlags="scroll|enterAlways">
+        <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </android.support.design.bottomappbar.BottomAppBar>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add_new"

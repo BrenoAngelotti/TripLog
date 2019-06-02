@@ -1,11 +1,13 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="listCardBackgroundColor">?attr/colorPrimary</item>
         <item name="appBackgroundColor">@color/colorBackground</item>
+        <item name="colorError">@color/colorAlert</item>
+        <item name="bottomAppBarStyle">@style/AppTheme.BottomAppBar</item>
 
         <item name="primaryTextColor">@color/colorPrimaryText</item>
         <item name="secondaryTextColor">@color/colorSecondaryText</item>
@@ -20,12 +22,14 @@
         <item name="android:windowExitTransition">@android:transition/slide_right</item>
     </style>
 
-    <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme.Dark" parent="Theme.MaterialComponents.NoActionBar">
         <item name="colorPrimary">@color/darkColorPrimary</item>
         <item name="colorPrimaryDark">@color/darkColorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="listCardBackgroundColor">?attr/colorPrimary</item>
         <item name="appBackgroundColor">@color/darkColorBackground</item>
+        <item name="colorError">@color/colorAlert</item>
+        <item name="bottomAppBarStyle">@style/AppTheme.BottomAppBar</item>
 
         <item name="primaryTextColor">@color/darkColorPrimaryText</item>
         <item name="secondaryTextColor">@color/darkColorSecondaryText</item>
@@ -42,6 +46,12 @@
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="color">?attr/primaryTextColor</item>
+    </style>
+
+    <style name="AppTheme.BottomAppBar" parent="Widget.MaterialComponents.BottomAppBar">
+        <item name="backgroundTint">?attr/colorPrimaryDark</item>
+        <item name="fabCradleMargin">10dp</item>
+        <item name="fabCradleRoundedCornerRadius">25dp</item>
     </style>
 
     <style name="Widget.AppTheme.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">

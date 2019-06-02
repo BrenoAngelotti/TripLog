@@ -9,6 +9,12 @@
         app:showAsAction="ifRoom"/>
 
     <item
+        android:id="@+id/action_view_types"
+        android:title="@string/action_view_types"
+        android:checked="false"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_swap_theme"
         android:title="@string/action_theme"
         android:icon="@drawable/theme_light_dark"

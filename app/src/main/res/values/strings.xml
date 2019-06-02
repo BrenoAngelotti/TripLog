@@ -35,5 +35,9 @@
 
     <string name="url_linkedin">https://www.linkedin.com/in/brenoangelotti/</string>
     <string name="txt_no_trips">No trip logs yet!</string>
+    <string name="action_view_types">View types</string>
+    <string name="message_remove_trip">Remove trip log?</string>
+    <string name="const_id">ID</string>
+    <string name="const_title">TITLE</string>
 
 </resources>
