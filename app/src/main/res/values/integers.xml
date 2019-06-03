@@ -2,4 +2,6 @@
 <resources>
     <integer name="int_add_trip">1001</integer>
     <integer name="int_edit_trip">1002</integer>
+    <integer name="int_add_type">1003</integer>
+    <integer name="int_edit_type">1004</integer>
 </resources>

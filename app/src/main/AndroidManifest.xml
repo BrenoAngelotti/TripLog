@@ -16,9 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.DetailActivity" android:configChanges="orientation|screenSize"/>
         <activity android:name=".View.TypeDataActivity" android:configChanges="orientation|screenSize"/>
         <activity android:name=".View.TripDataActivity" android:configChanges="orientation|screenSize"/>
+        <activity android:name=".View.DetailActivity"/>
+        <activity android:name=".View.TypesActivity"/>
         <activity android:name=".View.AboutActivity"/>
     </application>
 

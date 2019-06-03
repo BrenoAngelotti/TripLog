@@ -22,6 +22,8 @@ public class Type {
         this.color = color;
     }
 
+    public Type(){}
+
     public String getName() {
         return name;
     }

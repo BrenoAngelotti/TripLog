@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
             fab.hide();
+            mode.setTitle(tripList.get(position).getTitle());
             toolbar.getMenu().clear();
             return false;
         }
@@ -155,6 +156,9 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.action_view_types:
+                viewTypes();
+                return true;
         }
         return true;
     }
@@ -200,17 +204,24 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, getResources().getInteger(R.integer.int_add_trip));
     }
 
+    public void viewTypes(){
+        Intent intent = new Intent(getApplicationContext(), TypesActivity.class);
+        startActivityForResult(intent, getResources().getInteger(R.integer.int_edit_type));
+    }
+
     public void editTrip(){
         Intent intent = new Intent(getApplicationContext(), TripDataActivity.class);
         intent.putExtra(getString(R.string.const_id), tripList.get(position).getId());
         intent.putExtra(getString(R.string.const_title), tripList.get(position).getTitle());
-        startActivityForResult(intent, getResources().getInteger(R.integer.int_add_trip));
+        startActivityForResult(intent, getResources().getInteger(R.integer.int_edit_trip));
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if((requestCode == getResources().getInteger(R.integer.int_add_trip) || requestCode == getResources().getInteger(R.integer.int_edit_trip)) && resultCode == RESULT_OK){
+        if((requestCode == getResources().getInteger(R.integer.int_add_trip)
+                || requestCode == getResources().getInteger(R.integer.int_edit_trip)
+                || requestCode == getResources().getInteger(R.integer.int_edit_type)) && resultCode == RESULT_OK){
             loadTrips();
         }
     }
@@ -218,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
     public void removeTripVerification(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.action_remove)
-                .setMessage(R.string.message_remove_trip)
+                .setMessage(tripList.get(position).getTitle())
                 .setPositiveButton(R.string.action_remove, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         removeTrip();

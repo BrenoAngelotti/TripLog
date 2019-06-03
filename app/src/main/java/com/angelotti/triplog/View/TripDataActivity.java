@@ -1,27 +1,28 @@
 package com.angelotti.triplog.View;
 
-import android.support.v7.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.Spinner;
-import android.widget.Toast;
 import com.angelotti.triplog.Adapters.TypeDropDownAdapter;
-import com.angelotti.triplog.Model.*;
+import com.angelotti.triplog.Model.Trip;
+import com.angelotti.triplog.Model.Type;
 import com.angelotti.triplog.Persistence.AppDatabase;
 import com.angelotti.triplog.R;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import android.os.AsyncTask;
 
 public class TripDataActivity extends AppCompatActivity {
     Toolbar toolbar;
@@ -120,7 +121,6 @@ public class TripDataActivity extends AppCompatActivity {
     }
 
     void save(){
-        Toast.makeText(getApplicationContext(), "leu o banco com " + types.size(), Toast.LENGTH_LONG).show();
         if(!saveTrip())
             return;
         finish();

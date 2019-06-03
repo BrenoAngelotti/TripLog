@@ -4,12 +4,12 @@
     <color name="darkColorPrimaryDark">#26282F</color>
     <color name="darkColorPrimaryText">#FFFFFF</color>
     <color name="darkColorSecondaryText">#9A9A9F</color>
-    <color name="darkColorHiddenText">#5F5F66</color>
+    <color name="darkColorHiddenText">#7F7F88</color>
     <color name="darkColorBackground">#0E0F12</color>
     <color name="darkColorCardBackground">#505050</color>
 
     <color name="colorPrimary">#D0D0D0</color>
-    <color name="colorPrimaryDark">#A7A7A7</color>
+    <color name="colorPrimaryDark">#b0b0b0</color>
     <color name="colorPrimaryText">#000000</color>
     <color name="colorSecondaryText">#404040</color>
     <color name="colorHiddenText">#808080</color>

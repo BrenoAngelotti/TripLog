@@ -26,6 +26,9 @@ public interface TripDAO {
     @Query("SELECT * FROM trips WHERE title like '%' || :search || '%' ORDER BY title ASC")
     List<Trip> getByName(String search);
 
+    @Query("SELECT * FROM trips WHERE typeId = :typeId ORDER BY title ASC")
+    List<Trip> getByType(int typeId);
+
     @Query("SELECT * FROM trips ORDER BY title ASC")
     List<Trip> getAll();
 }
