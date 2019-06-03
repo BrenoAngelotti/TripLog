@@ -7,7 +7,9 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import com.angelotti.triplog.Model.*;
+import com.angelotti.triplog.Model.Trip;
+import com.angelotti.triplog.Model.Type;
+import com.angelotti.triplog.R;
 
 import java.util.concurrent.Executors;
 
@@ -27,7 +29,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (instance == null) {
                     Builder builder =  Room.databaseBuilder(context,
                             AppDatabase.class,
-                            "triplog.db");
+                            "triplogDB.db").allowMainThreadQueries();
 
                     builder.addCallback(new Callback() {
                         @Override
@@ -36,7 +38,7 @@ public abstract class AppDatabase extends RoomDatabase {
                             Executors.newSingleThreadScheduledExecutor().execute(new Runnable() {
                                 @Override
                                 public void run() {
-                                    loadInicialTypes(context);
+                                    loadInitialTypes(context);
                                 }
                             });
                         }
@@ -48,11 +50,12 @@ public abstract class AppDatabase extends RoomDatabase {
         return instance;
     }
 
+    private static void loadInitialTypes(final Context context){
+        String[] names = context.getResources().getStringArray(R.array.type_names);
+        String[] colors = context.getResources().getStringArray(R.array.type_colors);
 
-    private static void loadInicialTypes(final Context context){
-
-        Type city = new Type("Cidade", "#ff8800");
-        instance.typeDAO().insert(city);
+        for(int i = 0; i < names.length; i++)
+            instance.typeDAO().insert(new Type(names[i], colors[i]));
     }
 
 }

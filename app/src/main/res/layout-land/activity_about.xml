@@ -85,15 +85,17 @@
                         android:textColor="?attr/secondaryTextColor"
                         android:text="@string/txt_about"/>
 
-                    <Button
-                        android:id="@+id/btn_linkedin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:text="@string/action_linkedin"
-                        android:layout_marginTop="32dp"
-                        android:drawablePadding="12dp"
-                        android:onClick="openLinkedin"
-                        android:drawableStart="@drawable/linkedin"/>
+                    <android.support.design.button.MaterialButton
+                            android:id="@+id/btn_linkedin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:text="@string/action_linkedin"
+                            android:layout_marginTop="32dp"
+                            android:layout_marginBottom="32dp"
+                            android:drawablePadding="12dp"
+                            android:onClick="openLinkedin"
+                            style="@style/Widget.MaterialComponents.Button.Icon"
+                            app:icon="@drawable/linkedin"/>
                 </LinearLayout>
             </ScrollView>
         </RelativeLayout>

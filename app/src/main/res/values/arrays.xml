@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="type_names">
+        <item>@string/std_city</item>
+        <item>@string/std_tourist</item>
+        <item>@string/std_restaurant</item>
+    </string-array>
+
+    <string-array name="type_colors">
+        <item>#ff8800</item>
+        <item>#ff0088</item>
+        <item>#00ff88</item>
+    </string-array>
+</resources>

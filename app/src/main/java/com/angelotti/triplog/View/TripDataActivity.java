@@ -11,6 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.Spinner;
+import android.widget.Toast;
+import com.angelotti.triplog.Adapters.TypeDropDownAdapter;
 import com.angelotti.triplog.Model.*;
 import com.angelotti.triplog.Persistence.AppDatabase;
 import com.angelotti.triplog.R;
@@ -25,6 +28,7 @@ public class TripDataActivity extends AppCompatActivity {
     TextInputEditText tieTitle;
     TextInputEditText tieDescription;
     TextInputEditText tieDate;
+    Spinner spnType;
     DatePickerDialog tripDateDialog;
     FloatingActionButton fabSave;
 
@@ -34,6 +38,7 @@ public class TripDataActivity extends AppCompatActivity {
     boolean editing;
     Trip trip;
     ArrayList<Type> types;
+    TypeDropDownAdapter dropDownAdapter;
 
     boolean checkDiscard = true;
 
@@ -46,6 +51,7 @@ public class TripDataActivity extends AppCompatActivity {
         tieDescription = findViewById(R.id.tie_description);
         tieDate = findViewById(R.id.tie_date);
         tieTitle = findViewById(R.id.tie_name);
+        spnType = findViewById(R.id.spn_type);
         fabSave = findViewById(R.id.fab_save);
 
         fabSave.setOnClickListener(saveClickListener);
@@ -64,34 +70,23 @@ public class TripDataActivity extends AppCompatActivity {
             toolbar.setTitle(getString(R.string.txt_add_trip));
         }
 
-        loadTypes();
-
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        loadTypes();
+        dropDownAdapter = new TypeDropDownAdapter(this, types);
+        spnType.setAdapter(dropDownAdapter);
 
         tieDate.setOnClickListener(onDateClickListener);
-
         Calendar now = Calendar.getInstance();
         tripDateDialog = new DatePickerDialog(this, datePickerListener, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
     }
 
     private void loadTypes() {
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                AppDatabase database = AppDatabase.getDatabase(TripDataActivity.this);
-                types = new ArrayList<>(database.typeDAO().getAll());
-                TripDataActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //carregar spinner
-                    }
-                });
-            }
-        });
+        AppDatabase database = AppDatabase.getDatabase(TripDataActivity.this);
+        types = new ArrayList<>(database.typeDAO().getAll());
     }
 
     View.OnClickListener saveClickListener = new View.OnClickListener() {
@@ -101,11 +96,17 @@ public class TripDataActivity extends AppCompatActivity {
         }
     };
 
-    private void setEditingFields() {
+    private void loadEditingFields() {
         tieTitle.setText(trip.getTitle());
         tieDescription.setText(trip.getDescription());
         tripDate = trip.getDate();
         tieDate.setText(new SimpleDateFormat(getString(R.string.format_date)).format(tripDate));
+        Type selectedType = new Type("", "");
+        for(Type type : types){
+            if (type.getId() == trip.getTypeId())
+                selectedType = type;
+        }
+        spnType.setSelection(types.indexOf(selectedType));
     }
 
     @Override
@@ -119,6 +120,7 @@ public class TripDataActivity extends AppCompatActivity {
     }
 
     void save(){
+        Toast.makeText(getApplicationContext(), "leu o banco com " + types.size(), Toast.LENGTH_LONG).show();
         if(!saveTrip())
             return;
         finish();
@@ -134,7 +136,7 @@ public class TripDataActivity extends AppCompatActivity {
                 TripDataActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        setEditingFields();
+                        loadEditingFields();
                     }
                 });
             }
@@ -147,7 +149,7 @@ public class TripDataActivity extends AppCompatActivity {
         final String title = tieTitle.getText().toString();
         final String description = tieDescription.getText().toString();
         final Date date = tripDate;
-        final Type type = types.get(0);
+        final Type type = (Type) spnType.getSelectedItem();
 
         AsyncTask.execute(new Runnable() {
             @Override
@@ -177,6 +179,7 @@ public class TripDataActivity extends AppCompatActivity {
         String name = tieTitle.getText().toString();
         String description = tieDescription.getText().toString();
         String date = tieDate.getText().toString();
+
         boolean passing = true;
 
         if(name.isEmpty()){

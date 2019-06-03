@@ -69,7 +69,6 @@
                 android:id="@+id/txv_trip_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/txt_lorem"
                 android:textColor="?attr/primaryTextColor"
                 android:textSize="20sp"
                 android:textStyle="normal" />

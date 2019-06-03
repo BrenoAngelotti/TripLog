@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     RecyclerView rvTrips;
     LinearLayout llEmptyList;
-    public static ArrayList<Trip> tripList;
+    ArrayList<Trip> tripList;
     TripListAdapter adapter;
     FloatingActionButton fab;
     int position;
@@ -68,8 +68,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             position = rvTrips.getChildAdapterPosition(view);
+            Trip trip = tripList.get(position);
             Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
-            intent.putExtra(getString(R.string.const_index), position);
+            intent.putExtra(getString(R.string.const_id), trip.getId());
+            intent.putExtra(getString(R.string.const_title), trip.getTitle());
             startActivity(intent);
         }
     };

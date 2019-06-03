@@ -50,8 +50,8 @@
 
     <style name="AppTheme.BottomAppBar" parent="Widget.MaterialComponents.BottomAppBar">
         <item name="backgroundTint">?attr/colorPrimaryDark</item>
-        <item name="fabCradleMargin">10dp</item>
-        <item name="fabCradleRoundedCornerRadius">25dp</item>
+        <item name="fabCradleMargin">8dp</item>
+        <item name="fabCradleRoundedCornerRadius">24dp</item>
     </style>
 
     <style name="Widget.AppTheme.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
