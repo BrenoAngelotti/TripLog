@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.angelotti.triplog.Adapters.TypeListAdapter;
 import com.angelotti.triplog.Model.Type;
@@ -29,6 +30,7 @@ public class TypesActivity extends AppCompatActivity {
     ArrayList<Type> typeList;
     TypeListAdapter adapter;
     FloatingActionButton fab;
+    LinearLayout llEmptyList;
 
     int position;
 
@@ -45,6 +47,7 @@ public class TypesActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
+        llEmptyList = findViewById(R.id.ll_empty_list);
         fab = findViewById(R.id.fab_add_new);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +107,14 @@ public class TypesActivity extends AppCompatActivity {
         typeList.addAll(database.typeDAO().getAll());
         adapter = new TypeListAdapter(typeList, onItemClickListener, onItemLongClickListener, this);
         rvTypes.swapAdapter(adapter, false);
+        if(typeList.size() > 0){
+            llEmptyList.setVisibility(View.GONE);
+            rvTypes.setVisibility(View.VISIBLE);
+        }
+        else{
+            llEmptyList.setVisibility(View.VISIBLE);
+            rvTypes.setVisibility(View.GONE);
+        }
     }
 
     private View.OnClickListener onItemClickListener = new View.OnClickListener() {

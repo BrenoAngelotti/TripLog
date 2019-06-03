@@ -88,6 +88,9 @@ public class TripDataActivity extends AppCompatActivity {
     private void loadTypes() {
         AppDatabase database = AppDatabase.getDatabase(TripDataActivity.this);
         types = new ArrayList<>(database.typeDAO().getAll());
+        if(types.size() != 0)
+            return;
+        noTypesError();
     }
 
     View.OnClickListener saveClickListener = new View.OnClickListener() {
@@ -220,6 +223,19 @@ public class TripDataActivity extends AppCompatActivity {
             return;
         }
         super.onBackPressed();
+    }
+
+    void noTypesError(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.message_attention)
+                .setMessage(R.string.message_no_type_available)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        checkDiscard = false;
+                        onBackPressed();
+                    }
+                });
+        builder.create().show();
     }
 
     void showMessageDiscard()

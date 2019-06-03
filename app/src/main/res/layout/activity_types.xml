@@ -19,6 +19,30 @@
             android:clipToPadding="false"
             android:layoutAnimation="@anim/layout_anim_from_bottom" />
 
+    <LinearLayout
+        android:id="@+id/ll_empty_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/app_bar"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:scaleType="fitCenter"
+            style="@style/EmptyListImage"
+            app:srcCompat="@drawable/places"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            style="@style/EmptyListLabel"
+            android:text="@string/txt_no_types"/>
+    </LinearLayout>
+
     <android.support.design.bottomappbar.BottomAppBar
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
