@@ -44,5 +44,8 @@
     <string name="txt_types">Types</string>
     <string name="txt_edit_type">Editar tipo</string>
     <string name="message_cant_remove_type">Type can\'t be removed</string>
+    <string name="message_attention">Attention</string>
+    <string name="message_no_type_available">No type available for use. Please register a new one</string>
+    <string name="txt_no_types">No trip types\navailable!</string>
 
 </resources>

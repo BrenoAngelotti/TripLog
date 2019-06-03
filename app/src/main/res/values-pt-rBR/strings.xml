@@ -37,5 +37,8 @@
     <string name="std_restaurant">Restaurante</string>
     <string name="txt_types">Tipos</string>
     <string name="message_cant_remove_type">Tipo não pode ser removido</string>
+    <string name="message_attention">Atenção</string>
+    <string name="message_no_type_available">Nenhum tipo disponível para uso. Registre um novo</string>
+    <string name="txt_no_types">Nenhum tipo de\npasseio disponível!</string>
 
 </resources>
