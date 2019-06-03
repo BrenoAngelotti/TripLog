@@ -36,6 +36,6 @@
     <string name="std_tourist">Atração Turística</string>
     <string name="std_restaurant">Restaurante</string>
     <string name="txt_types">Tipos</string>
-    <string name="message_cant_remove_type">Type can\'t be removed</string>
+    <string name="message_cant_remove_type">Tipo não pode ser removido</string>
 
 </resources>
