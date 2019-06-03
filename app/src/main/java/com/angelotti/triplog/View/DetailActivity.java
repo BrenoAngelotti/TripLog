@@ -1,5 +1,6 @@
 package com.angelotti.triplog.View;
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ public class DetailActivity extends AppCompatActivity {
     Toolbar toolbar;
     TextView txvDescription;
     TextView txvDate;
+    TextView txvType;
 
     int id;
     String title;
@@ -34,6 +36,8 @@ public class DetailActivity extends AppCompatActivity {
 
         txvDescription = findViewById(R.id.txv_trip_description);
         txvDate = findViewById(R.id.txv_trip_date);
+        txvType = findViewById(R.id.txv_type_name);
+
         loadTrip();
 
         toolbar = findViewById(R.id.toolbar);
@@ -68,6 +72,8 @@ public class DetailActivity extends AppCompatActivity {
                     public void run() {
                         txvDate.setText(new SimpleDateFormat(getString(R.string.format_date)).format(trip.getDate()));
                         txvDescription.setText( trip.getDescription());
+                        txvType.setText(trip.getType().getName());
+                        txvType.setTextColor(Color.parseColor(trip.getType().getColor()));
                     }
                 });
             }

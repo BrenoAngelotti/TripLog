@@ -57,20 +57,31 @@
             android:padding="16dp">
 
             <TextView
+                android:id="@+id/txv_type_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_test"
+                android:textColor="#ff8800"
+                android:textAllCaps="true"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txv_trip_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_test"
+                android:textColor="?attr/primaryTextColor"
+                android:textSize="20sp"
+                android:textStyle="normal" />
+
+            <TextView
                 android:id="@+id/txv_trip_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="21/05/1993"
                 android:textColor="?attr/hiddenTextColor"
                 android:textSize="16sp"
-                android:textStyle="normal" />
-
-            <TextView
-                android:id="@+id/txv_trip_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="?attr/primaryTextColor"
-                android:textSize="20sp"
                 android:textStyle="normal" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
